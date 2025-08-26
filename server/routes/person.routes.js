@@ -18,4 +18,14 @@ router.post("/", async (req, res) => {
   res.status(201).json(newPerson);
 });
 
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Person.findByIdAndDelete(id);
+    res.status(204).end();
+  } catch (err) {
+    res.status(500).json({ error: "Löschen fehlgeschlagen" });
+  }
+});
+
 export default router;

@@ -1,0 +1,204 @@
+import { useEffect, useState } from "react";
+import "../styles.css";
+
+function Eingabe() {
+  const [personName, setPersonName] = useState("");
+  const [personTeam, setPersonTeam] = useState("");
+
+  const [raceName, setRaceName] = useState("");
+  const [raceDate, setRaceDate] = useState("");
+
+  const [races, setRaces] = useState([]);
+  const [persons, setPersons] = useState([]);
+  const [selectedRace, setSelectedRace] = useState("");
+  const [pointsData, setPointsData] = useState({});
+
+  // Initiale Daten laden
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const raceRes = await fetch("http://localhost:3001/api/races");
+    const raceData = await raceRes.json();
+    setRaces(raceData);
+
+    const personRes = await fetch("http://localhost:3001/api/persons");
+    const personData = await personRes.json();
+    setPersons(personData);
+  };
+
+  const handleAddPerson = async () => {
+    if (!personName || !personTeam) return;
+
+    await fetch("http://localhost:3001/api/persons", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: personName, team: personTeam }),
+    });
+
+    setPersonName("");
+    setPersonTeam("");
+    fetchData();
+  };
+
+  const handleDeletePerson = async (id) => {
+    if (!window.confirm("Diese Person wirklich löschen?")) return;
+    await fetch(`http://localhost:3001/api/persons/${id}`, {
+      method: "DELETE",
+    });
+    fetchData();
+  };
+
+  const handleAddRace = async () => {
+    if (!raceName || !raceDate) return;
+
+    await fetch("http://localhost:3001/api/races", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: raceName, date: raceDate }),
+    });
+
+    setRaceName("");
+    setRaceDate("");
+    fetchData();
+  };
+
+  const handleDeleteRace = async (id) => {
+    if (!window.confirm("Dieses Rennen wirklich löschen?")) return;
+    await fetch(`http://localhost:3001/api/races/${id}`, {
+      method: "DELETE",
+    });
+    fetchData();
+  };
+
+  const handlePointChange = (personId, value) => {
+    setPointsData((prev) => ({
+      ...prev,
+      [personId]: parseInt(value) || 0,
+    }));
+  };
+
+  const handleSubmitPoints = async () => {
+    if (!selectedRace) return alert("Bitte ein Rennen auswählen");
+
+    const results = Object.entries(pointsData).map(([personId, points]) => ({
+      personId,
+      points,
+    }));
+
+    await fetch(`http://localhost:3001/api/races/${selectedRace}/results`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ results }),
+    });
+
+    setPointsData({});
+    alert("Punkte wurden gespeichert");
+    fetchData();
+  };
+
+  return (
+    <div className="container">
+      <h1>Verwaltung</h1>
+
+      <section>
+        <h2>Person hinzufügen</h2>
+        <input
+          placeholder="Name"
+          value={personName}
+          onChange={(e) => setPersonName(e.target.value)}
+        />
+        <input
+          placeholder="Team"
+          value={personTeam}
+          onChange={(e) => setPersonTeam(e.target.value)}
+        />
+        <button onClick={handleAddPerson}>Hinzufügen</button>
+
+        <ul className="list">
+          {persons.map((p) => (
+            <li key={p._id} className="list-item">
+              <span>
+                {p.name} – {p.team}
+              </span>
+              <button
+                className="delete-button"
+                onClick={() => handleDeletePerson(p._id)}
+              >
+                Löschen
+              </button>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section>
+        <h2>Rennen hinzufügen</h2>
+        <input
+          placeholder="Rennen Name"
+          value={raceName}
+          onChange={(e) => setRaceName(e.target.value)}
+        />
+        <input
+          type="date"
+          value={raceDate}
+          onChange={(e) => setRaceDate(e.target.value)}
+        />
+        <button onClick={handleAddRace}>Hinzufügen</button>
+
+        <ul className="list">
+          {races.map((race) => (
+            <li key={race._id} className="list-item">
+              <span>
+                {race.name} ({new Date(race.date).toLocaleDateString()})
+              </span>
+              <button
+                className="delete-button"
+                onClick={() => handleDeleteRace(race._id)}
+              >
+                Löschen
+              </button>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section>
+        <h2>Punkte erfassen</h2>
+        <select
+          value={selectedRace}
+          onChange={(e) => setSelectedRace(e.target.value)}
+        >
+          <option value="">Rennen wählen</option>
+          {races.map((race) => (
+            <option key={race._id} value={race._id}>
+              {race.name}
+            </option>
+          ))}
+        </select>
+
+        {selectedRace && (
+          <div className="points-form">
+            {persons.map((p) => (
+              <div key={p._id} className="points-row">
+                <span>
+                  {p.name} ({p.team})
+                </span>
+                <input
+                  type="number"
+                  min="0"
+                  value={pointsData[p._id] || ""}
+                  onChange={(e) => handlePointChange(p._id, e.target.value)}
+                />
+              </div>
+            ))}
+            <button onClick={handleSubmitPoints}>Punkte speichern</button>
+          </div>
+        )}
+      </section>
+    </div>
+  );
+}
+
+export default Eingabe;

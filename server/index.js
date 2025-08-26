@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import personRoutes from "./routes/person.routes.js";
+import raceRoutes from "./routes/race.routes.js";
 
 dotenv.config();
 const app = express();
@@ -12,6 +13,7 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 app.use("/api/persons", personRoutes);
+app.use("/api/races", raceRoutes);
 
 app.get("/", (req, res) => {
   res.send("Marbula One Backend läuft");
