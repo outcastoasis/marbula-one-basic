@@ -1,6 +1,7 @@
 // Anzeige.jsx
 import { useEffect, useState } from "react";
 import "../styles.css";
+import { BASE_URL } from "../api";
 
 function Anzeige() {
   const [persons, setPersons] = useState([]);
@@ -13,13 +14,13 @@ function Anzeige() {
   }, []);
 
   const fetchPersons = async () => {
-    const res = await fetch("http://localhost:3001/api/persons");
+    const res = await fetch(`${BASE_URL}/persons`);
     const data = await res.json();
     setPersons(data);
   };
 
   const fetchRaces = async () => {
-    const res = await fetch("http://localhost:3001/api/races");
+    const res = await fetch(`${BASE_URL}/races`);
     const data = await res.json();
     setRaces(data);
     calculateLeaderboard(data);
@@ -124,7 +125,7 @@ function Anzeige() {
                     <td>{person.name}</td>
                     {races.map((race) => {
                       const result = race.results.find(
-                        (r) => r.personId._id === person._id
+                        (r) => r.personId?._id === person._id
                       );
                       const pts = result?.points || 0;
                       total += pts;

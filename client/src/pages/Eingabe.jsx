@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "../styles.css";
+import { BASE_URL } from "../api";
 
 function Eingabe() {
   const [personName, setPersonName] = useState("");
@@ -13,17 +14,16 @@ function Eingabe() {
   const [selectedRace, setSelectedRace] = useState("");
   const [pointsData, setPointsData] = useState({});
 
-  // Initiale Daten laden
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
-    const raceRes = await fetch("http://localhost:3001/api/races");
+    const raceRes = await fetch(`${BASE_URL}/races`);
     const raceData = await raceRes.json();
     setRaces(raceData);
 
-    const personRes = await fetch("http://localhost:3001/api/persons");
+    const personRes = await fetch(`${BASE_URL}/persons`);
     const personData = await personRes.json();
     setPersons(personData);
   };
@@ -31,7 +31,7 @@ function Eingabe() {
   const handleAddPerson = async () => {
     if (!personName || !personTeam) return;
 
-    await fetch("http://localhost:3001/api/persons", {
+    await fetch(`${BASE_URL}/persons`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: personName, team: personTeam }),
@@ -44,7 +44,7 @@ function Eingabe() {
 
   const handleDeletePerson = async (id) => {
     if (!window.confirm("Diese Person wirklich löschen?")) return;
-    await fetch(`http://localhost:3001/api/persons/${id}`, {
+    await fetch(`${BASE_URL}/persons/${id}`, {
       method: "DELETE",
     });
     fetchData();
@@ -53,7 +53,7 @@ function Eingabe() {
   const handleAddRace = async () => {
     if (!raceName || !raceDate) return;
 
-    await fetch("http://localhost:3001/api/races", {
+    await fetch(`${BASE_URL}/races`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: raceName, date: raceDate }),
@@ -66,7 +66,7 @@ function Eingabe() {
 
   const handleDeleteRace = async (id) => {
     if (!window.confirm("Dieses Rennen wirklich löschen?")) return;
-    await fetch(`http://localhost:3001/api/races/${id}`, {
+    await fetch(`${BASE_URL}/races/${id}`, {
       method: "DELETE",
     });
     fetchData();
@@ -87,7 +87,7 @@ function Eingabe() {
       points,
     }));
 
-    await fetch(`http://localhost:3001/api/races/${selectedRace}/results`, {
+    await fetch(`${BASE_URL}/races/${selectedRace}/results`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ results }),
