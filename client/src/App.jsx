@@ -37,6 +37,7 @@ function App() {
       </div>
 
       <Routes>
+        <Route path="/" element={<Anzeige />} />
         <Route path="/eingabe" element={<Eingabe />} />
         <Route path="/anzeige" element={<Anzeige />} />
         <Route path="*" element={<Anzeige />} />
