@@ -67,7 +67,7 @@ function Anzeige() {
         </ul>
       </section>
 
-      <section>
+      {/* <section>
         <h2>Rennen</h2>
         {races.map((race) => (
           <div key={race._id} className="race-box">
@@ -90,6 +90,7 @@ function Anzeige() {
           </div>
         ))}
       </section>
+      */}
 
       <section>
         <h2>Rangliste</h2>

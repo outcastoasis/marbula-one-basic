@@ -13,9 +13,9 @@ body {
 }
 
 .container {
+  max-width: 800px;
+  margin: 0 auto;
   padding: 1rem;
-  max-width: 900px;
-  margin: auto;
 }
 
 /* Headings */
@@ -237,4 +237,30 @@ ol.ranking {
 
 .delete-button:hover {
   background-color: #c0392b;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Ab 600px: Felder nebeneinander */
+@media (min-width: 600px) {
+  .input-group {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .input-group input,
+  .input-group select {
+    flex: 1;
+    max-width: 200px;
+  }
+
+  .input-group button {
+    white-space: nowrap;
+    padding: 0.6rem 1rem;
+  }
 }

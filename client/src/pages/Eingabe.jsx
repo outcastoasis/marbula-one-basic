@@ -104,17 +104,19 @@ function Eingabe() {
 
       <section>
         <h2>Person hinzufügen</h2>
-        <input
-          placeholder="Name"
-          value={personName}
-          onChange={(e) => setPersonName(e.target.value)}
-        />
-        <input
-          placeholder="Team"
-          value={personTeam}
-          onChange={(e) => setPersonTeam(e.target.value)}
-        />
-        <button onClick={handleAddPerson}>Hinzufügen</button>
+        <div className="input-group">
+          <input
+            placeholder="Name"
+            value={personName}
+            onChange={(e) => setPersonName(e.target.value)}
+          />
+          <input
+            placeholder="Team"
+            value={personTeam}
+            onChange={(e) => setPersonTeam(e.target.value)}
+          />
+          <button onClick={handleAddPerson}>Hinzufügen</button>
+        </div>
 
         <ul className="list">
           {persons.map((p) => (
@@ -135,17 +137,19 @@ function Eingabe() {
 
       <section>
         <h2>Rennen hinzufügen</h2>
-        <input
-          placeholder="Rennen Name"
-          value={raceName}
-          onChange={(e) => setRaceName(e.target.value)}
-        />
-        <input
-          type="date"
-          value={raceDate}
-          onChange={(e) => setRaceDate(e.target.value)}
-        />
-        <button onClick={handleAddRace}>Hinzufügen</button>
+        <div className="input-group">
+          <input
+            placeholder="Rennen Name"
+            value={raceName}
+            onChange={(e) => setRaceName(e.target.value)}
+          />
+          <input
+            type="date"
+            value={raceDate}
+            onChange={(e) => setRaceDate(e.target.value)}
+          />
+          <button onClick={handleAddRace}>Hinzufügen</button>
+        </div>
 
         <ul className="list">
           {races.map((race) => (
