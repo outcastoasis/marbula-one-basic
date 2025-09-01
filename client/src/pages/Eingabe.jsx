@@ -73,17 +73,41 @@ function Eingabe() {
   const handlePointChange = (personId, value) => {
     setPointsData((prev) => ({
       ...prev,
-      [personId]: parseInt(value) || 0,
+      [personId]: value,
     }));
+  };
+
+  const preloadRaceResults = (raceId) => {
+    const selected = races.find((r) => r._id === raceId);
+    if (!selected || !selected.results) return;
+
+    const mapped = {};
+    selected.results.forEach((res) => {
+      if (res.personId?._id) {
+        mapped[res.personId._id] = res.points.toString();
+      }
+    });
+
+    setPointsData(mapped);
   };
 
   const handleSubmitPoints = async () => {
     if (!selectedRace) return alert("Bitte ein Rennen auswählen");
 
-    const results = Object.entries(pointsData).map(([personId, points]) => ({
-      personId,
-      points,
-    }));
+    const results = Object.entries(pointsData)
+      .filter(
+        ([_, points]) =>
+          points !== "" && points !== null && points !== undefined
+      )
+      .map(([personId, points]) => ({
+        personId,
+        points: parseInt(points),
+      }));
+
+    if (results.length === 0) {
+      alert("Keine Punkte eingegeben.");
+      return;
+    }
 
     await fetch(`${BASE_URL}/races/${selectedRace}/results`, {
       method: "PUT",
@@ -175,7 +199,11 @@ function Eingabe() {
         <select
           className="input-button-style"
           value={selectedRace}
-          onChange={(e) => setSelectedRace(e.target.value)}
+          onChange={(e) => {
+            const id = e.target.value;
+            setSelectedRace(id);
+            preloadRaceResults(id);
+          }}
         >
           <option value="">Rennen wählen</option>
           {races.map((race) => (
@@ -195,7 +223,7 @@ function Eingabe() {
                 <input
                   type="number"
                   min="0"
-                  value={pointsData[p._id] || ""}
+                  value={pointsData[p._id] ?? ""}
                   onChange={(e) => handlePointChange(p._id, e.target.value)}
                 />
               </div>

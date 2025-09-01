@@ -62,9 +62,7 @@ function Anzeige() {
   };
 
   const buildCumulativeGraph = (races, persons) => {
-    const sortedRaces = [...races].sort(
-      (a, b) => new Date(a.date) - new Date(b.date)
-    );
+    const sortedRaces = [...races];
 
     const cumulativePoints = {};
     persons.forEach((p) => {
