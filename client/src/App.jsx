@@ -14,7 +14,17 @@ function App() {
     <Router>
       <div className="navbar">
         <div className="nav-container">
-          <h2 className="brand">Marbula One</h2>
+          {/* LOGO + TEXT */}
+          <div className="brand-logo">
+            <img
+              src="/assets/navbar_2.png"
+              alt="Marbula One Logo"
+              className="nav-logo"
+            />
+            <h2 className="brand"></h2>
+          </div>
+
+          {/* NAVIGATION */}
           <nav className="nav-links">
             <NavLink
               to="/eingabe"

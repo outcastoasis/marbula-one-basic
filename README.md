@@ -71,7 +71,7 @@ MONGODB_URI=<Deine MongoDB-Verbindungs-URL>
 
 ```bash
 cd server
-npm run dev
+node index.js
 ```
 
 **Frontend starten (neues Terminal):**

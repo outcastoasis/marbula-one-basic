@@ -8,35 +8,49 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f2f2f2;
-  color: #222;
   line-height: 1.6;
 }
 
 /* Layout Container */
 .container {
   max-width: 800px;
+  backdrop-filter: blur(5px); /* Unschärfe */
+  -webkit-backdrop-filter: blur(10px);
   margin: 0 auto;
   padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Typography */
 h1 {
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
-  border-bottom: 2px solid #000;
+  border-bottom: 2px solid #c6c6c6;
   padding-bottom: 0.5rem;
+  color: white;
 }
 
 h2 {
   font-size: 1.2rem;
   margin-top: 2rem;
   margin-bottom: 1rem;
+  color: #000;
 }
 
 @media (min-width: 600px) {
   h1 {
     font-size: 2rem;
   }
+}
+
+body {
+  background-image: url("/assets/bg-carbon-marble.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
 }
 
 /* Navigation */
@@ -51,7 +65,7 @@ h2 {
 }
 
 .nav-container {
-  max-width: 1000px;
+  max-width: 750px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -87,6 +101,18 @@ h2 {
   font-weight: 600;
   border-bottom: 2px solid #d61a1a;
 }
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.nav-logo {
+  height: 40px;
+  width: auto;
+}
+
 
 /* Sections */
 section {
