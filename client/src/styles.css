@@ -1,4 +1,4 @@
-/* Base Reset */
+/* Reset & Base */
 * {
   box-sizing: border-box;
 }
@@ -12,13 +12,14 @@ body {
   line-height: 1.6;
 }
 
+/* Layout Container */
 .container {
   max-width: 800px;
   margin: 0 auto;
   padding: 1rem;
 }
 
-/* Headings */
+/* Typography */
 h1 {
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
@@ -32,111 +33,9 @@ h2 {
   margin-bottom: 1rem;
 }
 
-/* Form & Inputs */
-input[type="text"],
-input[type="number"],
-input[type="date"],
-select {
-  width: 100%;
-  padding: 0.6rem;
-  margin-top: 0.3rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-}
-
-button {
-  padding: 0.6rem 1rem;
-  background-color: #d61a1a;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-button:hover {
-  background-color: #a61414;
-}
-
-/* Sections */
-section {
-  background: white;
-  padding: 1rem;
-  margin-bottom: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-/* Lists */
-ul.list,
-ol.ranking {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.list-item,
-.ranking-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.4rem 0;
-  border-bottom: 1px solid #eee;
-  font-size: 0.95rem;
-}
-
-.name {
-  font-weight: 500;
-}
-
-.team {
-  color: #666;
-  font-size: 0.9rem;
-}
-
-.points {
-  font-weight: bold;
-  color: #000;
-}
-
-/* Races */
-.race-box {
-  margin-bottom: 1rem;
-}
-
-.race-header {
-  display: flex;
-  justify-content: space-between;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-/* Punkte-Formular */
-.points-form {
-  margin-top: 1rem;
-}
-
-.points-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.8rem;
-}
-
-.points-row input {
-  width: 80px;
-}
-
-/* Responsive */
 @media (min-width: 600px) {
   h1 {
     font-size: 2rem;
-  }
-
-  .points-row input {
-    width: 100px;
   }
 }
 
@@ -189,6 +88,135 @@ ol.ranking {
   border-bottom: 2px solid #d61a1a;
 }
 
+/* Sections */
+section {
+  background: white;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Formular & Eingaben */
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.3rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.input-button-style {
+  padding: 0.6rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #fff;
+  color: #000000;
+}
+
+.input-button-style:focus {
+  outline: none;
+  border-color: #999;
+  background-color: #f9f9f9;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 600px) {
+  .input-group {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .input-group input,
+  .input-group select {
+    flex: 1;
+    max-width: 200px;
+  }
+
+  .input-group button {
+    white-space: nowrap;
+    padding: 0.6rem 1rem;
+  }
+}
+
+/* Punkte-Formular */
+.points-form {
+  margin-top: 1rem;
+}
+
+.points-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.points-row input {
+  width: 80px;
+}
+
+@media (min-width: 600px) {
+  .points-row input {
+    width: 100px;
+  }
+}
+
+/* Listen & Ranglisten */
+ul.list,
+ol.ranking {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-item,
+.ranking-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+}
+
+.name {
+  font-weight: 500;
+}
+
+.team {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.points {
+  font-weight: bold;
+  color: #000;
+}
+
+/* Rennen / Race-Boxen */
+.race-box {
+  margin-bottom: 1rem;
+}
+
+.race-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+/* Tabelle & Scroll */
 .result-table {
   width: 100%;
   border-collapse: collapse;
@@ -224,6 +252,7 @@ ol.ranking {
   overflow-x: auto;
 }
 
+/* Delete Button */
 .delete-button {
   background-color: #888;
   color: white;
@@ -239,28 +268,28 @@ ol.ranking {
   background-color: #c0392b;
 }
 
-.input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+/* Standard Button */
+button {
+  padding: 0.6rem 1rem;
+  background-color: #d61a1a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
-/* Ab 600px: Felder nebeneinander */
-@media (min-width: 600px) {
-  .input-group {
-    flex-direction: row;
-    align-items: center;
-  }
+button:hover {
+  background-color: #a61414;
+}
 
-  .input-group input,
-  .input-group select {
-    flex: 1;
-    max-width: 200px;
-  }
+.chart-scroll {
+  overflow-x: auto;
+  width: 100%;
+}
 
-  .input-group button {
-    white-space: nowrap;
-    padding: 0.6rem 1rem;
-  }
+.chart-inner {
+  min-width: 600px; /* oder z. B. 1000px, je nach gewünschtem Platz */
+  height: 300px;
 }

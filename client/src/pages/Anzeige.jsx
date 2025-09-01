@@ -2,28 +2,38 @@
 import { useEffect, useState } from "react";
 import "../styles.css";
 import { BASE_URL } from "../api";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  CartesianGrid,
+} from "recharts";
 
 function Anzeige() {
   const [persons, setPersons] = useState([]);
   const [races, setRaces] = useState([]);
   const [leaderboard, setLeaderboard] = useState([]);
+  const [cumulativeData, setCumulativeData] = useState([]);
 
   useEffect(() => {
-    fetchPersons();
-    fetchRaces();
+    fetchData();
   }, []);
 
-  const fetchPersons = async () => {
-    const res = await fetch(`${BASE_URL}/persons`);
-    const data = await res.json();
-    setPersons(data);
-  };
+  const fetchData = async () => {
+    const personRes = await fetch(`${BASE_URL}/persons`);
+    const personData = await personRes.json();
+    setPersons(personData);
 
-  const fetchRaces = async () => {
-    const res = await fetch(`${BASE_URL}/races`);
-    const data = await res.json();
-    setRaces(data);
-    calculateLeaderboard(data);
+    const raceRes = await fetch(`${BASE_URL}/races`);
+    const raceData = await raceRes.json();
+    setRaces(raceData);
+
+    calculateLeaderboard(raceData);
+    buildCumulativeGraph(raceData, personData);
   };
 
   const calculateLeaderboard = (races) => {
@@ -51,6 +61,39 @@ function Anzeige() {
     setLeaderboard(sorted);
   };
 
+  const buildCumulativeGraph = (races, persons) => {
+    const sortedRaces = [...races].sort(
+      (a, b) => new Date(a.date) - new Date(b.date)
+    );
+
+    const cumulativePoints = {};
+    persons.forEach((p) => {
+      cumulativePoints[p._id] = 0;
+    });
+
+    const chartData = sortedRaces.map((race) => {
+      race.results?.forEach((result) => {
+        if (result.personId?._id) {
+          cumulativePoints[result.personId._id] += result.points;
+        }
+      });
+
+      const entry = { name: race.name };
+      persons.forEach((p) => {
+        entry[p.name] = cumulativePoints[p._id];
+      });
+
+      return entry;
+    });
+
+    setCumulativeData(chartData);
+  };
+
+  const generateColor = (index, total) => {
+    const hue = (index * (360 / total)) % 360;
+    return `hsl(${hue}, 70%, 50%)`;
+  };
+
   return (
     <div className="container">
       <h1>Marbula One Ergebnisse</h1>
@@ -66,31 +109,6 @@ function Anzeige() {
           ))}
         </ul>
       </section>
-
-      {/* <section>
-        <h2>Rennen</h2>
-        {races.map((race) => (
-          <div key={race._id} className="race-box">
-            <div className="race-header">
-              <strong>{race.name}</strong>
-              <span className="race-date">
-                ({new Date(race.date).toLocaleDateString()})
-              </span>
-            </div>
-            <ul className="list">
-              {race.results.map((res, i) => (
-                <li key={i} className="list-item">
-                  <span className="name">
-                    {res.personId?.name ?? "Unbekannt"}
-                  </span>
-                  <span className="points">{res.points} Punkte</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </section>
-      */}
 
       <section>
         <h2>Rangliste</h2>
@@ -140,6 +158,33 @@ function Anzeige() {
               })}
             </tbody>
           </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>Punkteverlauf</h2>
+        <div className="chart-scroll">
+          <div className="chart-inner">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={cumulativeData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis allowDecimals={false} />
+                <Tooltip />
+                <Legend />
+                {persons.map((p, i) => (
+                  <Line
+                    key={p._id}
+                    type="monotone"
+                    dataKey={p.name}
+                    stroke={generateColor(i, persons.length)}
+                    strokeWidth={2}
+                    dot={{ r: 3 }}
+                  />
+                ))}
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
         </div>
       </section>
     </div>

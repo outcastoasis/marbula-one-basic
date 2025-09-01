@@ -5,10 +5,8 @@ import { BASE_URL } from "../api";
 function Eingabe() {
   const [personName, setPersonName] = useState("");
   const [personTeam, setPersonTeam] = useState("");
-
   const [raceName, setRaceName] = useState("");
   const [raceDate, setRaceDate] = useState("");
-
   const [races, setRaces] = useState([]);
   const [persons, setPersons] = useState([]);
   const [selectedRace, setSelectedRace] = useState("");
@@ -106,11 +104,13 @@ function Eingabe() {
         <h2>Person hinzufügen</h2>
         <div className="input-group">
           <input
+            className="input-button-style"
             placeholder="Name"
             value={personName}
             onChange={(e) => setPersonName(e.target.value)}
           />
           <input
+            className="input-button-style"
             placeholder="Team"
             value={personTeam}
             onChange={(e) => setPersonTeam(e.target.value)}
@@ -139,11 +139,13 @@ function Eingabe() {
         <h2>Rennen hinzufügen</h2>
         <div className="input-group">
           <input
+            className="input-button-style"
             placeholder="Rennen Name"
             value={raceName}
             onChange={(e) => setRaceName(e.target.value)}
           />
           <input
+            className="input-button-style"
             type="date"
             value={raceDate}
             onChange={(e) => setRaceDate(e.target.value)}
@@ -171,6 +173,7 @@ function Eingabe() {
       <section>
         <h2>Punkte erfassen</h2>
         <select
+          className="input-button-style"
           value={selectedRace}
           onChange={(e) => setSelectedRace(e.target.value)}
         >
