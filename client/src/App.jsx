@@ -25,7 +25,6 @@ function App() {
               alt="Marbula One Logo"
               className="nav-logo"
             />
-            <h2 className="brand">Marbula One</h2>
           </a>
 
           {/* NAVIGATION */}
