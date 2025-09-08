@@ -15,14 +15,18 @@ function App() {
       <div className="navbar">
         <div className="nav-container">
           {/* LOGO + TEXT */}
-          <div className="brand-logo">
+          <a
+            href="/anzeige"
+            className="brand-logo"
+            title="Zur Startseite (neu laden)"
+          >
             <img
               src="/assets/navbar_2.png"
               alt="Marbula One Logo"
               className="nav-logo"
             />
-            <h2 className="brand"></h2>
-          </div>
+            <h2 className="brand">Marbula One</h2>
+          </a>
 
           {/* NAVIGATION */}
           <nav className="nav-links">

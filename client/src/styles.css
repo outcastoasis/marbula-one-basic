@@ -113,7 +113,6 @@ body {
   width: auto;
 }
 
-
 /* Sections */
 section {
   background: white;
@@ -318,4 +317,12 @@ button:hover {
 .chart-inner {
   min-width: 600px; /* oder z. B. 1000px, je nach gewünschtem Platz */
   height: 300px;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: inherit;
 }
