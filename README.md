@@ -126,9 +126,3 @@ marbula-one-basic/
 - Die Farbverteilung für die Linien ist automatisch und passt sich der Teilnehmerzahl an.
 
 ---
-
-## Lizenz
-
-Dieses Projekt steht unter der **MIT License** – freie Nutzung und Modifikation erlaubt.
-
----
