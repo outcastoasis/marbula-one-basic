@@ -91,8 +91,10 @@ marbula-one-basic/
 │   ├── src/
 │   │   ├── pages/           # Eingabe und Anzeige
 │   │   ├── api.js           # BASE_URL-Konfiguration
-│   │   └── styles.css       # zentrales Styling
-│   └── public/
+│   │   ├── styles.css       # zentrales Styling
+│   │   ├── App.jsx          # Seitenstruktur, Routing/Navigation
+│   │   └── main.jsx         # Startpunkt Frontend, rendert App.jsx
+│   └── public/              # Icons & Background
 ├── server/
 │   ├── models/              # MongoDB-Modelle
 │   ├── routes/              # Express-API-Endpunkte

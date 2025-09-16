@@ -1,4 +1,4 @@
-// Anzeige.jsx
+// client/src/pages/Anzeige.jsx
 import { useEffect, useState } from "react";
 import "../styles.css";
 import { BASE_URL } from "../api";

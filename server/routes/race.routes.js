@@ -32,6 +32,7 @@ router.put("/:id/results", async (req, res) => {
   res.json(race);
 });
 
+// Rennen löschen
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {

@@ -18,6 +18,7 @@ router.post("/", async (req, res) => {
   res.status(201).json(newPerson);
 });
 
+// Person löschen
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
